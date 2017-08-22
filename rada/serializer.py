@@ -7,7 +7,8 @@ class DispositivoSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
 
     def get_url(self, obj):
-        return "api/dispositivo/" + obj.nombre + "/%i" % obj.puerto
+        absolute_url = self.context['request'].build_absolute_uri('/')[:-1].strip("/")
+        return absolute_url + "/api/dispositivo/" + obj.nombre
 
     class Meta:
         model = Dispositivo
